@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+    <title>Texture Set Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+
+    
+
+
+    <div class="relative isolate overflow-hidden bg-zinc-900 py-14 sm:py-auto">
+
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-zinc-400 sm:text-6xl">Texture set generator</h1>
+        <p class="mt-6 text-lg leading-8 text-gray-600">An online texture_set.json generator makes texture creator's lives easier</p>
+      </div>
+
+      <br>
+
+
+
+
+    <div class="px-6 lg:px-96">
+    <div class="flex flex-col space-y-2.5 ">
+        <p class="text-zinc-300">Texture Name:<input type="text" id="texture_name_input" placeholder="Texture Name" class="float-right min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6" required></p>
+        <p class="text-zinc-300">Format Version:<input type="text" id="format_version_input" value="1.16.100" class=" float-right min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></p>
+        <p class="text-zinc-300">Suffix of Metalness Emissive Roughness(MER):<input type="text" id="suffix_mer_input" value="mer" class=" float-right min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></p>
+        <p class="text-zinc-300">Suffix of HeightMap:<input type="text" id="suffix_input" value="normal" class=" float-right min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></p>
+    </div>
+
+    <div>
+      <button onclick="generateTexture()" class="text-zinc-300 flex space-x-4 rounded-md bg-indigo-500 px-3.5 p-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+        Generate&nbsp;
+        <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+      viewBox="0 0 24 24" id="download-alt"><path fill="#FFFFFF" d="M19.91,15.51H15.38a1,1,0,0,0,0,2h2.4A8,8,0,0,1,4,12a1,1,0,0,0-2,0,10,10,0,0,0,16.88,7.23V21a1,1,0,0,0,2,0V16.5A1,1,0,0,0,19.91,15.51ZM12,2A10,10,0,0,0,5.12,4.77V3a1,1,0,0,0-2,0V7.5a1,1,0,0,0,1,1h4.5a1,1,0,0,0,0-2H6.22A8,8,0,0,1,20,12a1,1,0,0,0,2,0A10,10,0,0,0,12,2Z"></path></svg>
+      </button>
+      
+    </div>
+    <br>
+    <div>
+      <textarea id="textureTextArea" cols=80 rows=10 class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea> 
+      <button onclick="clearTextArea()" class="text-zinc-300 flex space-x-4 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+        Clear&nbsp;
+        <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+      viewBox="0 0 24 24" id="download-alt"><path fill="#FFFFFF" d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"></path></svg>
+      </button>
+    </div>
+    <br>
+    <button onclick="downloadTexture()" class="text-zinc-300 flex space-x-4 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 ">
+      Download&nbsp;
+      <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+      viewBox="0 0 24 24" id="download-alt"><path fill="#FFFFFF" d="M8.29,13.29a1,1,0,0,0,0,1.42l3,3a1,1,0,0,0,1.42,0l3-3a1,1,0,0,0-1.42-1.42L13,14.59V3a1,1,0,0,0-2,0V14.59l-1.29-1.3A1,1,0,0,0,8.29,13.29ZM18,9H16a1,1,0,0,0,0,2h2a1,1,0,0,1,1,1v7a1,1,0,0,1-1,1H6a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H8A1,1,0,0,0,8,9H6a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H18a3,3,0,0,0,3-3V12A3,3,0,0,0,18,9Z"></path></svg>
+    </button>
+
+    
+
+  
+    
+    <div class="text-zinc-300">
+    <ul role="list" class="divide-y divide-gray-100 "> 
+      <li class="flex gap-x-5 py-5">
+        <div class="flex gap-x-4">
+          <img class="h-12 w-12 flex-none rounded-full bg-gray-50" src="profile.jpeg" alt="">
+          <div class="min-w-0 flex-auto">
+            <p class="text-zinc-300 text-sm font-semibold leading-6 text-gray-900"><abbr style="text-decoration: none;" title="Mohamed Jiyath Khan Ibn Ibramsha">jiyath_khan#7579</abbr> @Discord</p>
+            <p class="text-zinc-300 mt-1 truncate text-xs leading-5 text-gray-500">Front-end Developer | Founder of Al-Aleem Agency</p>
+          </div>
+        </div>
+      </li>
+    </div>
+    </ul>
+  </div>
+
+  <div class="flex flex-col items-center justify-center">
+  <button  class="text-zinc-300  rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 ">
+    <a href="https://github.com/Jiyath5516F/Texture-Set-Generator" class="flex space-x-4">
+      Source Code on&nbsp;
+    <svg class="fill-white" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20"
+    viewBox="0 0 24 24" id="download-alt"><path fill="#FFFFFF" d="M12,2.2467A10.00042,10.00042,0,0,0,8.83752,21.73419c.5.08752.6875-.21247.6875-.475,0-.23749-.01251-1.025-.01251-1.86249C7,19.85919,6.35,18.78423,6.15,18.22173A3.636,3.636,0,0,0,5.125,16.8092c-.35-.1875-.85-.65-.01251-.66248A2.00117,2.00117,0,0,1,6.65,17.17169a2.13742,2.13742,0,0,0,2.91248.825A2.10376,2.10376,0,0,1,10.2,16.65923c-2.225-.25-4.55-1.11254-4.55-4.9375a3.89187,3.89187,0,0,1,1.025-2.6875,3.59373,3.59373,0,0,1,.1-2.65s.83747-.26251,2.75,1.025a9.42747,9.42747,0,0,1,5,0c1.91248-1.3,2.75-1.025,2.75-1.025a3.59323,3.59323,0,0,1,.1,2.65,3.869,3.869,0,0,1,1.025,2.6875c0,3.83747-2.33752,4.6875-4.5625,4.9375a2.36814,2.36814,0,0,1,.675,1.85c0,1.33752-.01251,2.41248-.01251,2.75,0,.26251.1875.575.6875.475A10.0053,10.0053,0,0,0,12,2.2467Z"></path></svg>
+    </a>
+  </button>
+    
+</div>
+        
+          <div class="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6" aria-hidden="true">
+            <div class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30" style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)"></div>
+          </div>
+        </div>
+
+    <script src="app.js"></script>
+
+    </body>
+</html>
